@@ -1,8 +1,9 @@
-export {};
+import { lexer } from "./lexer.js";
 
-const prompt = require("prompt-sync")({ sigint: true });
+let text = "5 + 5";
+console.log(text);
+let lex = new lexer(text);
+let tokens = lex.generateTokens();
 
-while (true) {
-	let text = prompt("Calc > ");
-	console.log(text);
-}
+let tokensList = tokens.map((token) => token.info());
+console.log(tokensList);

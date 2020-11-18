@@ -1,7 +1,7 @@
-"use strict";
-exports.__esModule = true;
-var prompt = require("prompt-sync")({ sigint: true });
-while (true) {
-	var text = prompt("Calc > ");
-	console.log(text);
-}
+import { lexer } from "./lexer.js";
+let text = "5 + 5";
+console.log(text);
+let lex = new lexer(text);
+let tokens = lex.generateTokens();
+let tokensList = tokens.map((token) => token.info());
+console.log(tokensList);
