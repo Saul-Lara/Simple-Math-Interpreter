@@ -5,5 +5,7 @@ console.log(text);
 let lex = new lexer(text);
 let tokens = lex.generateTokens();
 
-let tokensList = tokens.map((token) => token.info());
-console.log(tokensList);
+if (tokens != null) {
+	let tokensList = tokens.map((token) => token.info());
+	console.log(tokensList);
+}

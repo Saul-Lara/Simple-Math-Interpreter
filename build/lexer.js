@@ -13,45 +13,50 @@ class lexer {
             this.position < this.text.length ? this.text[this.position] : null;
     }
     generateTokens() {
-        let tokens = [];
-        while (this.current_char != null) {
-            if (WHITESPACE.includes(this.current_char)) {
-                this.advance();
+        try {
+            let tokens = [];
+            while (this.current_char != null) {
+                if (WHITESPACE.includes(this.current_char)) {
+                    this.advance();
+                }
+                else if (this.current_char == "." ||
+                    DIGITS.includes(this.current_char)) {
+                    //this.generateNumber();
+                    tokens.push(this.generateNumber());
+                }
+                else if (this.current_char == "+") {
+                    this.advance();
+                    tokens.push(new token(tokenType.PLUS));
+                }
+                else if (this.current_char == "-") {
+                    this.advance();
+                    tokens.push(new token(tokenType.MINUS));
+                }
+                else if (this.current_char == "*") {
+                    this.advance();
+                    tokens.push(new token(tokenType.MULTIPLY));
+                }
+                else if (this.current_char == "/") {
+                    this.advance();
+                    tokens.push(new token(tokenType.DIVIDE));
+                }
+                else if (this.current_char == "(") {
+                    this.advance();
+                    tokens.push(new token(tokenType.LPAREN));
+                }
+                else if (this.current_char == ")") {
+                    this.advance();
+                    tokens.push(new token(tokenType.RPAREN));
+                }
+                else {
+                    throw new Error(`Analysis failed, Illegal character ${this.current_char}`);
+                }
             }
-            else if (this.current_char == "." ||
-                DIGITS.includes(this.current_char)) {
-                //this.generateNumber();
-                tokens.push(this.generateNumber());
-            }
-            else if (this.current_char == "+") {
-                this.advance();
-                tokens.push(new token(tokenType.PLUS));
-            }
-            else if (this.current_char == "-") {
-                this.advance();
-                tokens.push(new token(tokenType.MINUS));
-            }
-            else if (this.current_char == "*") {
-                this.advance();
-                tokens.push(new token(tokenType.MULTIPLY));
-            }
-            else if (this.current_char == "/") {
-                this.advance();
-                tokens.push(new token(tokenType.DIVIDE));
-            }
-            else if (this.current_char == "(") {
-                this.advance();
-                tokens.push(new token(tokenType.LPAREN));
-            }
-            else if (this.current_char == ")") {
-                this.advance();
-                tokens.push(new token(tokenType.RPAREN));
-            }
-            else {
-                throw new Error("Illegal char");
-            }
+            return tokens;
         }
-        return tokens;
+        catch (error) {
+            console.log(error.name + " : " + error.message);
+        }
     }
     generateNumber() {
         let decimalPointCount = 0;

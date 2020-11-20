@@ -21,40 +21,47 @@ class lexer {
 	}
 
 	generateTokens() {
-		let tokens: token[] = [];
-		while (this.current_char != null) {
-			if (WHITESPACE.includes(this.current_char)) {
-				this.advance();
-			} else if (
-				this.current_char == "." ||
-				DIGITS.includes(this.current_char)
-			) {
-				//this.generateNumber();
-				tokens.push(this.generateNumber());
-			} else if (this.current_char == "+") {
-				this.advance();
-				tokens.push(new token(tokenType.PLUS));
-			} else if (this.current_char == "-") {
-				this.advance();
-				tokens.push(new token(tokenType.MINUS));
-			} else if (this.current_char == "*") {
-				this.advance();
-				tokens.push(new token(tokenType.MULTIPLY));
-			} else if (this.current_char == "/") {
-				this.advance();
-				tokens.push(new token(tokenType.DIVIDE));
-			} else if (this.current_char == "(") {
-				this.advance();
-				tokens.push(new token(tokenType.LPAREN));
-			} else if (this.current_char == ")") {
-				this.advance();
-				tokens.push(new token(tokenType.RPAREN));
-			} else {
-				throw new Error("Illegal char");
-			}
-		}
+		try {
+			let tokens: token[] = [];
 
-		return tokens;
+			while (this.current_char != null) {
+				if (WHITESPACE.includes(this.current_char)) {
+					this.advance();
+				} else if (
+					this.current_char == "." ||
+					DIGITS.includes(this.current_char)
+				) {
+					//this.generateNumber();
+					tokens.push(this.generateNumber());
+				} else if (this.current_char == "+") {
+					this.advance();
+					tokens.push(new token(tokenType.PLUS));
+				} else if (this.current_char == "-") {
+					this.advance();
+					tokens.push(new token(tokenType.MINUS));
+				} else if (this.current_char == "*") {
+					this.advance();
+					tokens.push(new token(tokenType.MULTIPLY));
+				} else if (this.current_char == "/") {
+					this.advance();
+					tokens.push(new token(tokenType.DIVIDE));
+				} else if (this.current_char == "(") {
+					this.advance();
+					tokens.push(new token(tokenType.LPAREN));
+				} else if (this.current_char == ")") {
+					this.advance();
+					tokens.push(new token(tokenType.RPAREN));
+				} else {
+					throw new Error(
+						`Analysis failed, Illegal character ${this.current_char}`
+					);
+				}
+			}
+
+			return tokens;
+		} catch (error) {
+			console.log(error.name + " : " + error.message);
+		}
 	}
 
 	generateNumber() {
