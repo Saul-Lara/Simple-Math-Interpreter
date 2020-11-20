@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"build": "tsc -t es2016 src/lexer.ts --outDir build",
+		"build": "tsc -t es2016 src/parser.ts --outDir build",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {

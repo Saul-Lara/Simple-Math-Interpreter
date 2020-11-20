@@ -56,6 +56,7 @@ class lexer {
         }
         catch (error) {
             console.log(error.name + " : " + error.message);
+            return null;
         }
     }
     generateNumber() {

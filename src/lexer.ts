@@ -61,6 +61,7 @@ class lexer {
 			return tokens;
 		} catch (error) {
 			console.log(error.name + " : " + error.message);
+			return null;
 		}
 	}
 
