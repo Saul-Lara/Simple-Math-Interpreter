@@ -9,7 +9,7 @@ class numberNode {
 class addNode {
 	nodeA: any;
 	nodeB: any;
-	constructor(nodeA, nodeB) {
+	constructor(nodeA: any, nodeB: any) {
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 	}
@@ -19,7 +19,7 @@ class subtractNode {
 	nodeA: any;
 	nodeB: any;
 
-	constructor(nodeA, nodeB) {
+	constructor(nodeA: any, nodeB: any) {
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 	}
@@ -29,7 +29,7 @@ class multiplyNode {
 	nodeA: any;
 	nodeB: any;
 
-	constructor(nodeA, nodeB) {
+	constructor(nodeA: any, nodeB: any) {
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 	}
@@ -39,7 +39,7 @@ class divideNode {
 	nodeA: any;
 	nodeB: any;
 
-	constructor(nodeA, nodeB) {
+	constructor(nodeA: any, nodeB: any) {
 		this.nodeA = nodeA;
 		this.nodeB = nodeB;
 	}

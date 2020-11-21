@@ -21,8 +21,13 @@ class lexer {
                 }
                 else if (this.current_char == "." ||
                     DIGITS.includes(this.current_char)) {
-                    //this.generateNumber();
-                    tokens.push(this.generateNumber());
+                    let number = this.generateNumber();
+                    if (number) {
+                        tokens.push(number);
+                    }
+                    else {
+                        throw new Error(`Analysis failed`);
+                    }
                 }
                 else if (this.current_char == "+") {
                     this.advance();
@@ -62,6 +67,7 @@ class lexer {
     generateNumber() {
         let decimalPointCount = 0;
         let numberStr = this.current_char;
+        let rtn;
         this.advance();
         while (this.current_char != null &&
             (this.current_char == "." || DIGITS.includes(this.current_char))) {
@@ -74,13 +80,19 @@ class lexer {
             numberStr += this.current_char;
             this.advance();
         }
-        if (numberStr.startsWith(".")) {
-            numberStr = "0" + numberStr;
+        if (numberStr) {
+            if (numberStr.startsWith(".")) {
+                numberStr = "0" + numberStr;
+            }
+            if (numberStr.endsWith(".")) {
+                numberStr += "0";
+            }
+            rtn = new token(tokenType.NUMBER, parseFloat(numberStr));
         }
-        if (numberStr.endsWith(".")) {
-            numberStr += "0";
+        else {
+            rtn = null;
         }
-        return new token(tokenType.NUMBER, parseFloat(numberStr));
+        return rtn;
     }
 }
 export { lexer };

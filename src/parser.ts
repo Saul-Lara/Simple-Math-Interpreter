@@ -15,6 +15,7 @@ class parser {
 
 	constructor(tokens: token[]) {
 		this.tokens = tokens[Symbol.iterator]();
+		this.currentToken = null;
 		this.advance();
 	}
 
@@ -29,7 +30,7 @@ class parser {
 		}
 	}
 
-	parse() {
+	parse(): any {
 		if (this.currentToken == null) {
 			return null;
 		}
@@ -43,7 +44,7 @@ class parser {
 		return result;
 	}
 
-	expr() {
+	expr(): any {
 		let result = this.term();
 
 		while (
@@ -62,7 +63,7 @@ class parser {
 		return result;
 	}
 
-	term() {
+	term(): any {
 		let result = this.factor();
 
 		while (
@@ -83,32 +84,34 @@ class parser {
 		return result;
 	}
 
-	factor() {
+	factor(): any {
 		if (this.currentToken == null) {
 			this.raiseError();
 		}
 
-		let token = this.currentToken.value;
+		if (this.currentToken) {
+			let token = this.currentToken.value;
 
-		if (token.type == tokenType.LPAREN) {
-			this.advance();
-			let result = this.expr();
+			if (token.type == tokenType.LPAREN) {
+				this.advance();
+				let result = this.expr();
 
-			if (this.currentToken.value.type != tokenType.RPAREN) {
-				this.raiseError();
+				if (this.currentToken.value.type != tokenType.RPAREN) {
+					this.raiseError();
+				}
+
+				this.advance();
+				return result;
+			} else if (token.type == tokenType.NUMBER) {
+				this.advance();
+				return new numberNode(token.value);
+			} else if (token.type == tokenType.PLUS) {
+				this.advance();
+				return new plusNode(this.factor());
+			} else if (token.type == tokenType.MINUS) {
+				this.advance();
+				return new minusNode(this.factor());
 			}
-
-			this.advance();
-			return result;
-		} else if (token.type == tokenType.NUMBER) {
-			this.advance();
-			return new numberNode(token.value);
-		} else if (token.type == tokenType.PLUS) {
-			this.advance();
-			return new plusNode(this.factor());
-		} else if (token.type == tokenType.MINUS) {
-			this.advance();
-			return new minusNode(this.factor());
 		}
 
 		this.raiseError();
